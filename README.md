@@ -28,7 +28,12 @@ Everything is re-exported from the package root (`import { ... } from "static-si
    };
    ```
 3. Make sure `react`, `next`, and `lucide-react` are installed in the consuming site (they're `peerDependencies`, not bundled).
-4. Use it:
+4. If the site uses Tailwind v4 (`@import "tailwindcss"` in `globals.css`): Tailwind excludes `node_modules` from its default content scan, so it won't generate CSS for classes used only inside this package unless told to look there. Add this to `globals.css`:
+   ```css
+   @source "../node_modules/static-site-kit/src";
+   ```
+   (adjust the relative path if `globals.css` doesn't live one level under the project root). Without this, `Navbar`/`ui.tsx` components render with no styling at all — structure intact, but no borders, spacing, or responsive `hidden`/`flex` behavior, since those utility classes never get generated.
+5. Use it:
    ```tsx
    // app/layout.tsx
    import { Navbar, type NavLink } from "static-site-kit";
