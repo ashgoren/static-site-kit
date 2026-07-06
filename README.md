@@ -8,7 +8,7 @@ This package ships raw, unbuilt TypeScript/TSX source — there's no build step 
 
 Everything is re-exported from the package root (`import { ... } from "static-site-kit"`):
 
-- **`Navbar`** — `{ title: string; links: NavLink[]; brand?: React.ReactNode; prodApex: string }`. Renders the header, mobile drawer, and `ThemeToggle`.
+- **`Navbar`** — `{ title: string; shortTitle?: string; links: NavLink[]; brand?: React.ReactNode; prodApex: string }`. Renders the header, mobile drawer, and `ThemeToggle`. If `shortTitle` is given, the header shows the full `title` on mobile (where links are hidden) and at `lg`+ (where there's room again), swapping to `shortTitle` only in the narrower `md`-to-`lg` band where the title is competing with the centered links for space.
 - **`NavLink`** — type: `{ label: string; href: string }`.
 - **`ThemeToggle`** — `{ prodApex: string }`. Usually rendered internally by `Navbar`, but exported standalone too.
 - **`getTheme()`** / **`setTheme(theme, apex)`** / **`Theme`** — the underlying cookie-backed theme persistence. `apex` scopes the cookie's `Domain` attribute (e.g. `"yoursite.info"`) so the theme choice is shared with a registration app or other subdomain on the same parent domain; it's only applied when the page is actually being served from that domain (so `localhost`/preview URLs are unaffected).
