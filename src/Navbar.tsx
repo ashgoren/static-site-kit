@@ -9,11 +9,13 @@ export type NavLink = { label: string; href: string };
 
 export default function Navbar({
   title,
+  shortTitle,
   links,
   brand,
   prodApex,
 }: {
   title: string;
+  shortTitle?: string;
   links: NavLink[];
   brand?: React.ReactNode;
   prodApex: string;
@@ -23,10 +25,20 @@ export default function Navbar({
   return (
     <header className="border-b border-accent/30 bg-accent/10">
       <div className="px-6 py-3 grid grid-cols-[auto_1fr_auto] items-center gap-x-6 gap-y-2">
-        {/* Left: brand (optional) + title — pinned to column 1 */}
+        {/* Left: brand (optional) + title — pinned to column 1. When shortTitle is given, the
+            full title shows on mobile (where links are hidden, so there's no space pressure) and
+            at lg+ (where there's room again), swapping to the abbreviated form only in the
+            narrower md-to-lg band where it's competing with the centered links for space. */}
         <Link href="/" className="col-start-1 flex items-center gap-2 font-semibold text-lg tracking-tight shrink-0">
           {brand}
-          {title}
+          {shortTitle ? (
+            <>
+              <span className="md:hidden lg:inline">{title}</span>
+              <span className="hidden md:inline lg:hidden">{shortTitle}</span>
+            </>
+          ) : (
+            title
+          )}
         </Link>
 
         {/* Links — centered in column 2 (the 1fr track), so this stays truly centered between
