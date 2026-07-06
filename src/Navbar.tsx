@@ -22,15 +22,20 @@ export default function Navbar({
 
   return (
     <header className="border-b border-accent/30 bg-accent/10">
-      <div className="px-6 py-3 flex flex-wrap items-center gap-x-6 gap-y-2">
-        {/* Left: brand (optional) + title */}
-        <Link href="/" className="flex items-center gap-2 font-semibold text-lg tracking-tight shrink-0">
+      <div className="px-6 py-3 grid grid-cols-[auto_1fr_auto] items-center gap-x-6 gap-y-2">
+        {/* Left: brand (optional) + title — pinned to column 1 */}
+        <Link href="/" className="col-start-1 flex items-center gap-2 font-semibold text-lg tracking-tight shrink-0">
           {brand}
           {title}
         </Link>
 
-        {/* Links — wraps to a second line only if it doesn't fit, growing the header instead of breaking it */}
-        <ul className="hidden md:flex flex-1 flex-wrap justify-center gap-x-6 gap-y-1 text-base">
+        {/* Links — centered in column 2 (the 1fr track), so this stays truly centered between
+            title and controls no matter their width, without overlapping either (unlike absolute
+            positioning). Wraps to a second line only if it doesn't fit, growing the header instead
+            of overlapping. Pinned to column 2 via col-start so it doesn't shift into column 3 when
+            hidden below md (grid auto-placement would otherwise slide the controls div into the
+            gap it leaves behind). */}
+        <ul className="col-start-2 hidden md:flex flex-wrap justify-center gap-x-6 gap-y-1 text-base">
           {links.map(({ label, href }) => (
             <li key={href}>
               <NavItem href={href} label={label} />
@@ -38,8 +43,8 @@ export default function Navbar({
           ))}
         </ul>
 
-        {/* Right: theme toggle + (when applicable) mobile hamburger */}
-        <div className="flex items-center gap-2 ml-auto">
+        {/* Right: theme toggle + (when applicable) mobile hamburger — pinned to column 3 */}
+        <div className="col-start-3 flex items-center gap-2">
           <ThemeToggle prodApex={prodApex} />
           <button
             className="md:hidden flex flex-col gap-1.5 p-1"
