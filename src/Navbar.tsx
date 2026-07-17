@@ -13,18 +13,25 @@ export default function Navbar({
   links,
   brand,
   prodApex,
+  centerLinksOnPage = false,
 }: {
   title: string;
   shortTitle?: string;
   links: NavLink[];
   brand?: React.ReactNode;
   prodApex: string;
+  /** Center links on the full header width instead of the space between title and controls.
+   * Default (false) keeps links from ever overlapping a wide title/control area, which reads
+   * best with longer titles or longer link lists. Turning this on lines links up with page
+   * content that's centered on the page (rather than on the leftover header space), which
+   * reads best with a short link list where overlap isn't a realistic risk. */
+  centerLinksOnPage?: boolean;
 }) {
   const [open, setOpen] = useState(false);
 
   return (
     <header className="border-b border-accent/30 bg-accent/10">
-      <div className="px-6 py-3 grid grid-cols-[auto_1fr_auto] items-center gap-x-6 gap-y-2">
+      <div className="relative px-6 py-3 grid grid-cols-[auto_1fr_auto] items-center gap-x-6 gap-y-2">
         {/* Left: brand (optional) + title — pinned to column 1. When shortTitle is given, the
             full title shows on mobile (where links are hidden, so there's no space pressure) and
             at lg+ (where there's room again), swapping to the abbreviated form only in the
@@ -41,13 +48,23 @@ export default function Navbar({
           )}
         </Link>
 
-        {/* Links — centered in column 2 (the 1fr track), so this stays truly centered between
-            title and controls no matter their width, without overlapping either (unlike absolute
-            positioning). Wraps to a second line only if it doesn't fit, growing the header instead
-            of overlapping. Pinned to column 2 via col-start so it doesn't shift into column 3 when
-            hidden below md (grid auto-placement would otherwise slide the controls div into the
-            gap it leaves behind). */}
-        <ul className="col-start-2 hidden md:flex flex-wrap justify-center gap-x-6 gap-y-1 text-base">
+        {/* Links — by default centered in column 2 (the 1fr track), so this stays truly centered
+            between title and controls no matter their width, without overlapping either (unlike
+            absolute positioning). Wraps to a second line only if it doesn't fit, growing the header
+            instead of overlapping. Pinned to column 2 via col-start so it doesn't shift into column
+            3 when hidden below md (grid auto-placement would otherwise slide the controls div into
+            the gap it leaves behind).
+
+            When centerLinksOnPage is set, links are absolutely centered on the full header width
+            instead, so they land at the same x-position as page content centered below the header —
+            at the cost of the overlap protection above, so this is meant for short link lists. */}
+        <ul
+          className={
+            centerLinksOnPage
+              ? "absolute left-1/2 -translate-x-1/2 hidden md:flex flex-wrap justify-center gap-x-6 gap-y-1 text-base"
+              : "col-start-2 hidden md:flex flex-wrap justify-center gap-x-6 gap-y-1 text-base"
+          }
+        >
           {links.map(({ label, href }) => (
             <li key={href}>
               <NavItem href={href} label={label} />
