@@ -1,6 +1,6 @@
 # static-site-kit
 
-Shared `Navbar`, `ThemeToggle`, theme/cookie persistence, and typography/layout primitives (`PageShell`, `SectionHeader`, `EventCard`, etc.) for a family of small static Next.js event sites.
+Shared `Navbar`, `ThemeToggle`, and theme/cookie persistence for a family of small static Next.js event sites.
 
 This package ships raw, unbuilt TypeScript/TSX source — there's no build step and no `dist/`. Consuming sites compile it themselves via Next.js's [`transpilePackages`](https://nextjs.org/docs/app/api-reference/config/next-config-js/transpilePackages), the same way they compile their own local code.
 
@@ -13,7 +13,6 @@ Everything is re-exported from the package root (`import { ... } from "static-si
 - **`ThemeToggle`** — `{ prodApex: string }`. Usually rendered internally by `Navbar`, but exported standalone too.
 - **`getTheme()`** / **`setTheme(theme, apex)`** / **`Theme`** — the underlying cookie-backed theme persistence. `apex` scopes the cookie's `Domain` attribute (e.g. `"yoursite.info"`) so the theme choice is shared with a registration app or other subdomain on the same parent domain; it's only applied when the page is actually being served from that domain (so `localhost`/preview URLs are unaffected).
 - **`getCookie`** / **`setCookie`** / **`deleteCookie`** — generic, app-agnostic cookie helpers `theme.ts` is built on.
-- **`PageShell`, `SectionHeader`, `SectionSubHeader`, `Paragraph`, `BulletList`, `Callout`, `Blockquote`, `SectionDivider`, `EventCard`, `InlineLink`** — typography/layout primitives (from `ui.tsx`).
 
 ## Using this in a site
 
@@ -32,7 +31,7 @@ Everything is re-exported from the package root (`import { ... } from "static-si
    ```css
    @source "../node_modules/static-site-kit/src";
    ```
-   (adjust the relative path if `globals.css` doesn't live one level under the project root). Without this, `Navbar`/`ui.tsx` components render with no styling at all — structure intact, but no borders, spacing, or responsive `hidden`/`flex` behavior, since those utility classes never get generated.
+   (adjust the relative path if `globals.css` doesn't live one level under the project root). Without this, `Navbar`/`ThemeToggle` render with no styling at all — structure intact, but no borders, spacing, or responsive `hidden`/`flex` behavior, since those utility classes never get generated.
 5. Use it:
    ```tsx
    // app/layout.tsx
@@ -44,10 +43,6 @@ Everything is re-exported from the package root (`import { ... } from "static-si
    ];
 
    <Navbar title="Your Site Name" links={links} prodApex="yoursite.info" />
-   ```
-   ```tsx
-   // app/some-page/page.tsx
-   import { PageShell, Paragraph, InlineLink } from "static-site-kit";
    ```
 
 ## Local development (co-developing with a consuming site)
