@@ -139,7 +139,7 @@ function NavItem({ href, label, onClick }: { href: string; label: string; onClic
       href={href}
       onClick={onClick}
       className={`transition-opacity hover:opacity-100 ${
-        pathname === href ? "text-accent font-semibold" : "opacity-60"
+        pathname === href ? "text-accent font-semibold" : "opacity-70"
       }`}
     >
       {label}
