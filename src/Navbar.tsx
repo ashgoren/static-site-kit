@@ -45,6 +45,9 @@ export default function Navbar({
         <>
           <div className="flex items-start justify-between gap-4 px-6 pt-4 pb-4 md:pb-0">
             {hamburgerButton}
+            {/* Same width as the hamburger, standing in for it wherever it's hidden.
+                Keeps the image centered on the full header width so links line up. */}
+            <div aria-hidden className={`w-9 shrink-0 ${hamburgerButton ? "hidden md:block" : ""}`} />
             <div className="flex-1 flex justify-center">{headerImage}</div>
             <div className="-mt-[5px]">
               <ThemeToggle prodApex={prodApex} />
@@ -104,8 +107,8 @@ function LinksList({ links, centerLinksOnPage }: { links: NavLink[]; centerLinks
     <ul
       className={
         centerLinksOnPage
-          ? "absolute left-1/2 -translate-x-1/2 hidden md:flex flex-wrap justify-center gap-x-6 gap-y-1 text-base"
-          : "col-start-2 hidden md:flex flex-wrap justify-center gap-x-6 gap-y-1 text-base"
+          ? "absolute left-1/2 -translate-x-1/2 hidden md:flex flex-wrap justify-center gap-x-8 gap-y-1 text-base"
+          : "col-start-2 hidden md:flex flex-wrap justify-center gap-x-8 gap-y-1 text-base"
       }
     >
       {links.map(({ label, href }) => (
