@@ -43,7 +43,9 @@ export default function Navbar({
     <header className={`border-b border-accent/30 ${tinted ? "bg-accent/10" : "bg-background"}`}>
       {headerImage ? (
         <>
-          <div className="flex items-start justify-between gap-4 px-6 pt-4 pb-4 md:pb-0">
+          {/* Tighter padding and gaps below md, where the hamburger and theme toggle share this row
+              with the image, so the image keeps as much width as possible on phones */}
+          <div className="flex items-start justify-between gap-2 md:gap-4 px-3 md:px-6 pt-4 pb-4 md:pb-0">
             {hamburgerButton}
             {/* Same width as the hamburger, standing in for it wherever it's hidden.
                 Keeps the image centered on the full header width so links line up. */}
