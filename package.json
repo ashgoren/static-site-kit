@@ -1,16 +1,12 @@
 {
   "name": "static-site-kit",
-  "version": "0.9.0",
+  "version": "0.9.1",
   "private": true,
   "type": "module",
   "main": "./src/index.ts",
   "types": "./src/index.ts",
   "exports": {
-    ".": "./src/index.ts",
-    "./check-routes": {
-      "types": "./src/checkRoutes.d.ts",
-      "default": "./src/checkRoutes.js"
-    }
+    ".": "./src/index.ts"
   },
   "peerDependencies": {
     "react": "^19",

@@ -14,20 +14,6 @@ Everything is re-exported from the package root (`import { ... } from "static-si
 - **`getTheme()`** / **`setTheme(theme, apex)`** / **`Theme`** — the underlying cookie-backed theme persistence. `apex` scopes the cookie's `Domain` attribute (e.g. `"yoursite.info"`) so the theme choice is shared with a registration app or other subdomain on the same parent domain; it's only applied when the page is actually being served from that domain (so `localhost`/preview URLs are unaffected).
 - **`getCookie`** / **`setCookie`** / **`deleteCookie`** — generic, app-agnostic cookie helpers `theme.ts` is built on.
 
-### `static-site-kit/check-routes`
-
-A separate, build-time-only entry point (plain JS, uses `node:fs`) for use in `next.config.ts`, not in components:
-
-- **`withRouteCheck(links, nextConfig)`** — wraps the site's config so `next dev` and `next build` fail if the site's top-level routes and its `links` disagree: every `app/<name>/` folder with a page file must be linked, and every internal link must have a page folder. To keep a page unpublished without deleting it, rename its folder with a leading underscore (`app/_about/`). The check only runs in the dev and build phases; the config itself passes through unchanged:
-
-  ```ts
-  // next.config.ts
-  import { withRouteCheck } from "static-site-kit/check-routes";
-  import { links } from "./site.config";
-  // ...
-  export default withRouteCheck(links, nextConfig);
-  ```
-
 ## Using this in a site
 
 1. Add the dependency, pointing at a released tag:
